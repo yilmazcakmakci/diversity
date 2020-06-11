@@ -1,12 +1,30 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mount } from '@vue/test-utils'
+import ChartCard from '@/components/ChartCard.vue'
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
+const data = {
+  title: 'Gender',
+  data: [
+    {
+      label: 'Man',
+      value: 4
+    },
+    {
+      label: 'Woman',
+      value: 5
+    }
+  ]
+}
+
+describe('ChartCard.vue', () => {
+  it('renders a chart container', () => {
+    
+    const wrapper = mount(ChartCard, {
+      propsData: {
+        chartData: data
+      }
     })
-    expect(wrapper.text()).toMatch(msg)
+    const svg = wrapper.find('.chart-container')
+    
+    expect(svg.exists()).toBe(true)
   })
 })
