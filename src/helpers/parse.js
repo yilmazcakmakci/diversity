@@ -36,7 +36,7 @@ export default function(records) {
                 const flattened = frequency(value.flat())
                 
                 // We must calculate each values percentage in all data
-                // becouse these fields are multiselect
+                // because these fields are multiselect
                 Object.entries(flattened).forEach(el => {
                     data.push({
                         label: el[0],
