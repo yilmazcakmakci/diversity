@@ -1,28 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1 class="title">Diversity</h1>
+    <div style="display:flex;justify-content:center">
+      <hexagon v-if="allChartData === null"/>
+    </div>
+    <div class="container" v-if="allChartData !== null">
+      <ChartCard v-for="(chartData, index) in allChartData" :chartData=chartData :key="index" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ChartCard from './components/ChartCard.vue'
+import { getData } from '@/helpers/fetch'
+import parse from '@/helpers/parse'
+import { Hexagon } from 'vue-loading-spinner'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ChartCard,
+    Hexagon
+  },
+  data() {
+    return {
+      allChartData: null
+    }
+  },
+  created() {
+    getData().then( res => {
+      this.allChartData = parse(res.data.records)
+    })
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
